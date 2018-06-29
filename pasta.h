@@ -3,16 +3,16 @@
 
 #include <stdlib.h>
 
-#ifndef PASTA_ALLOCATOR
-#	define PASTA_ALLOCATOR malloc
+#ifndef PASTA_ALLOCATE
+#	define PASTA_ALLOCATE malloc
 #endif
 
-#ifndef PASTA_REALLOCATOR
-#	define PASTA_REALLOCATOR realloc
+#ifndef PASTA_REALLOCATE
+#	define PASTA_REALLOCATE realloc
 #endif
 
-#ifndef PASTA_DEALLOCATOR
-#	define PASTA_DEALLOCATOR free
+#ifndef PASTA_DEALLOCATE
+#	define PASTA_DEALLOCATE free
 #endif
 
 typedef void (*free_f)(void*);
@@ -67,8 +67,8 @@ static void pasta_push(pasta_stack *stack, void *address, free_f deconstructor);
  */
 static void *pasta_malloc(pasta_stack *stack, size_t size)
 {
-	void *result = PASTA_ALLOCATOR(size);
-	pasta_push(stack, result, PASTA_DEALLOCATOR);
+	void *result = PASTA_ALLOCATE(size);
+	pasta_push(stack, result, PASTA_DEALLOCATE);
 	return result;
 }
 
@@ -81,7 +81,7 @@ static void pasta_realloc(pasta_stack *stack, void *address, size_t new_size)
 
 	for (; current_node != NULL; current_node = current_node->next) {
 		if (current_node->address == address) {
-			current_node->address = PASTA_REALLOCATOR(current_node->address, new_size);
+			current_node->address = PASTA_REALLOCATE(current_node->address, new_size);
 			return;
 		}
 	}
