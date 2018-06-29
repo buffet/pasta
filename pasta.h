@@ -15,12 +15,14 @@
 #	define PASTA_DEALLOCATOR free
 #endif
 
+typedef void (*free_f)(void*);
+
 /**
  * Represents an allocated object in the current stack frame
  */
 typedef struct pasta_stack_node {
 	void *address;
-	void *deconstructor;
+	free_f deconstructor;
 	struct pasta_stack_node *next;
 } pasta_stack_node;
 
@@ -46,7 +48,7 @@ static void pasta_destroy(pasta_stack *stack);
 /**
  * Registers a given object in the current stack frame
  */
-static void pasta_push(pasta_stack *stack, void *address, void *dealloc);
+static void pasta_push(pasta_stack *stack, void *address, free_f deconstructor);
 
 /**
  * Allocates an object in the current stack frame and registers it
@@ -61,6 +63,6 @@ static void pasta_realloc(pasta_stack *stack, void *address, size_t new_size);
 /**
  * Frees an object in the current stack frame prior to ending the stack frame (think about this first)
  */
-static void pasta_free(pasta_stack *dtack, void *address);
+static void pasta_free(pasta_stack *stack, void *address);
 
 #endif /* PASTA_H */
