@@ -6,7 +6,7 @@ Just pop in the header, `#include "pasta.h"`, and that's it.
 
 ## Examples
 Bad:
-```
+```C
 #include <stdlib.h>
 
 int main(void)
@@ -40,7 +40,7 @@ int main(void)
 ```
 
 Better:
-```
+```C
 #include <stdlib.h>
 
 int main(void)
@@ -81,7 +81,7 @@ done:
 ```
 
 With pasta:
-```
+```C
 #include "pasta.h"
 
 #include <stdlib.h>
