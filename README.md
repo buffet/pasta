@@ -71,10 +71,8 @@ int main(void)
 
 done:
 	fclose(f);
-	if (obj)
-		free(obj);
-	if (obj2)
-		free(obj2);
+	free(obj);
+	free(obj2);
 
 	return result;
 }
